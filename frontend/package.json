@@ -1,13 +1,12 @@
 {
-  "name": "vite",
+  "name": "video_auspin",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "video_auspin",
+    "build": "video_auspin build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "video_auspin preview"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -20,7 +19,6 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.3.4",
-    "vite": "^4.3.2"
+    "eslint-plugin-react-refresh": "^0.3.4"
   }
 }
