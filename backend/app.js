@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
+const MiniSearch = require("minisearch");
 
 const videos = [
     {
@@ -187,10 +188,21 @@ const videos = [
 
 ]
 
+
 const app = express();
 
+let miniSearch = new MiniSearch({
+    fields: ['title', 'palavrasChave'],
+    storeFields: ['title', 'videoName']
+});
+
+miniSearch.addAll(videos);
+
 app.get("/video", (req, res) => {
-    res.sendFile("assets/V01.mp4", {root: __dirname});
+    const searchQuery = req.params.query;
+
+    miniSearch.search(searchQuery);
+    //res.sendFile("assets/V01.mp4", {root: __dirname});
 });
 
 app.use(cors());

@@ -25,7 +25,6 @@ export default class Home extends Component {
                         <div className="col-md-4" key={video.id}>
                             <Link to={`/player/${video.id}`}>
                                 <div className="card border-0">
-                                    <img src={`http://localhost:4000${video.poster}`} alt={video.title} />
                                     <div className="card-body">
                                         <p>{video.title}</p>
                                     </div>
