@@ -193,7 +193,11 @@ const app = express();
 
 let miniSearch = new MiniSearch({
     fields: ['title', 'palavrasChave'],
-    storeFields: ['title', 'videoName']
+    storeFields: ['title', 'videoName'],
+    searchOptions: {
+        fuzzy: 0.2,
+        prefix: true,
+    }
 });
 
 miniSearch.addAll(videos);
@@ -201,7 +205,7 @@ miniSearch.addAll(videos);
 app.get("/video", (req, res) => {
     const searchQuery = req.params.query;
 
-    miniSearch.search(searchQuery);
+    res.sendFile("assets/" + miniSearch.search(searchQuery)[1] + ".mp4", {root:__dirname});
     //res.sendFile("assets/V01.mp4", {root: __dirname});
 });
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import SearchBox from './components/searchBox';
+import axios from "axios";
 export default class Home extends Component {
     constructor() {
         super();
@@ -16,6 +18,21 @@ export default class Home extends Component {
             console.log(error);
         }
     }
+
+    async componentQuery(query) {
+        try {
+            const response = await axios.get('http://localhost:4000/video', {
+                params: {
+                    query: query
+                }
+            });
+            const data = await response.json();
+            this.setState({ videos: [...data] });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     render() {
         return (
             <div className="App App-header">
@@ -32,6 +49,9 @@ export default class Home extends Component {
                             </Link>
                         </div>
                         )}
+                    </div>
+                    <div className="searchBox">
+                        <SearchBox callback{...this.componentQuery} />
                     </div>
                 </div>
             </div>
