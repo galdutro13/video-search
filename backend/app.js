@@ -203,10 +203,18 @@ let miniSearch = new MiniSearch({
 miniSearch.addAll(videos);
 
 app.get("/video", (req, res) => {
-    const searchQuery = req.params.query;
+    const searchQuery = req.query.query;
 
-    res.sendFile("assets/" + miniSearch.search(searchQuery)[1] + ".mp4", {root:__dirname});
-    //res.sendFile("assets/V01.mp4", {root: __dirname});
+    const searchResults = miniSearch.search(searchQuery);
+
+    const filteredResults = searchResults.map(result => {
+        return {
+            title: result.title,
+            videoName: result.videoName
+        }
+    });
+
+    res.json(filteredResults);
 });
 
 app.use(cors());

@@ -1,1 +1,5 @@
 GET http://localhost:4000/videos
+
+###
+
+GET http://localhost:4000/video?query=siste
