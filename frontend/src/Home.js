@@ -9,49 +9,55 @@ export default class Home extends Component {
             videos: []
         };
     }
-    async componentDidMount() {
+
+    componentDidMount() {
+        this.fetchVideos();
+    }
+    async fetchVideos() {
         try {
             const response = await fetch('http://localhost:4000/videos');
             const data = await response.json();
-            this.setState({ videos: [...data] });
+            this.setState({ videos: data });
         } catch (error) {
             console.log(error);
         }
     }
 
-    async componentQuery(query) {
+    handleSearch = async (query) => {
         try {
-            const response = await axios.get('http://localhost:4000/video', {
-                params: {
-                    query: query
-                }
-            });
-            const data = await response.json();
-            this.setState({ videos: [...data] });
+            if (query === '') {
+                this.fetchVideos();
+                return;
+            } else {
+                const response = await axios.get('http://localhost:4000/search?query=' + query);
+                const data = response.data;
+                this.setState({ videos: data });
+            }
         } catch (error) {
             console.log(error);
         }
     }
 
     render() {
+        const { videos } = this.state;
         return (
             <div className="App App-header">
                 <div className="container">
                     <div className="row">
-                        {this.state.videos.map(video =>
-                        <div className="col-md-4" key={video.id}>
-                            <Link to={`/player/${video.id}`}>
-                                <div className="card border-0">
-                                    <div className="card-body">
-                                        <p>{video.title}</p>
+                        {videos.map(video => (
+                            <div className="col-md-4" key={video.id}>
+                                <Link to={`/player/${video.id}`}>
+                                    <div className="card border-0">
+                                        <div className="card-body">
+                                            <p>{video.title}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        </div>
-                        )}
+                                </Link>
+                            </div>
+                        ))}
                     </div>
                     <div className="searchBox">
-                        <SearchBox callback{...this.componentQuery} />
+                        <SearchBox callback={this.handleSearch} />
                     </div>
                 </div>
             </div>
