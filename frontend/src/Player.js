@@ -35,13 +35,16 @@ class Player extends Component {
     console.log('Valor de videoId:', this.state.videoId);
     return (
       <div className="App">
-        <header className="App-header" style={{backgroundColor: '#6699cc'}}>
-        <button onClick={this.handleBackClick}>Voltar</button>
+        <header className="App-header" style={{textShadow: '1px 1px 1px rgba(0, 0, 0, 0.3)', backgroundColor: '#6699cc'}}>
+        <div className="Arrow Left" style={{ cursor: 'pointer', position: 'absolute', left: '50px', top: '50px'}} onClick={this.handleBackClick}>
+          <i class="arrow left" style={{ height: '15px', width: '15px'}}></i>
+          <p style={{ display: 'inline', color: '#f9cb08', fontWeight: 'bold', paddingLeft: '4px'}}>Voltar</p>
+        </div>
 
         {this.state.videoId && (
           <video 
-          style={{ width: "50%", height: "auto" }}
-          controls muted autoPlay>
+          style={{ width: "50%", height: "auto", boxShadow: '4px 3px 8px rgba(0, 0, 0, 0.5)' }}
+          controls autoPlay>
             <source
               src={`http://localhost:4000/videos/${this.state.videoId}`}
               type="video/mp4"
