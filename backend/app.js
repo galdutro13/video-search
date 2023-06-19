@@ -225,7 +225,7 @@ let miniSearch = new MiniSearch({
     fields: ['title', 'palavrasChave', 'GPTChaves'],
     storeFields: ['id', 'title', 'videoName'],
     searchOptions: {
-        fuzzy: 0.2,
+        fuzzy: 0.25,
         prefix: true
     }
 });

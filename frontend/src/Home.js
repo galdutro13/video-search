@@ -12,6 +12,7 @@ export default class Home extends Component {
             videos: []
         };
         this.gridRef = React.createRef();
+        this.msnry = null;
     }
 
     componentDidMount() {
@@ -24,20 +25,22 @@ export default class Home extends Component {
         const gridWidth = 1350;
         const numberOfColumns = 6;
         const columnWidth = gridWidth / numberOfColumns;
-        imagesLoaded(grid, () => {
-            new Masonry(grid, {
-                itemSelector: '.grid-item',
-                columnWidth: columnWidth,
-                percentPosition: true,
-            });
+        this.msnry = new Masonry(grid, {
+            itemSelector: '.grid-item',
+            columnWidth: columnWidth,
+            percentPosition: true,
         });
+        imagesLoaded(grid, this.msnry);
     }
 
     async fetchVideos() {
         try {
             const response = await fetch('http://localhost:4000/videos');
             const data = await response.json();
-            this.setState({ videos: data });
+            this.setState({ videos: data }, () => {
+                this.msnry.reloadItems();
+                this.msnry.layout();
+            });
         } catch (error) {
             console.log(error);
         }
@@ -58,29 +61,49 @@ export default class Home extends Component {
         }
     }
 
+    getRandomColor(previousColor) {
+        // Define o conjunto de cores
+        const colors = ['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff'];
+        // Filtra o conjunto de cores para remover a cor do card anterior
+        const availableColors = colors.filter(color => color !== previousColor);
+        // Gera um índice aleatório
+        const randomIndex = Math.floor(Math.random() * availableColors.length);
+        // Retorna a cor correspondente ao índice gerado
+        return availableColors[randomIndex];
+    }
+
     render() {
         const { videos } = this.state;
+        let previousColor = null;
         return (
-            <div className="App App-header">
+            <div className="App App-header" style={{backgroundColor: '#6699cc'}}>
                 <h1 style={{fontSize: '30px', marginTop: '25px', marginBottom: '25px'}}>30 TECNOLOGIAS DA USP QUE VOCÊ PRECISA CONHECER!</h1>
-                <div className="container" style={{maxWidth: '1350px'}}>
-                    <div className="grid" ref={this.gridRef}>
+                <div className="container" style={{ maxWidth: '1536px', minHeight: '1000px' }}>
+                    <div className="grid" ref={this.gridRef} style={{position:'absolute', display: 'block', marginLeft: 'auto', marginRight: 'auto'}}>
                         <div className="grid-sizer"></div>
-                        {videos.map(video => (
-                            <div className="grid-item" key={video.id} style={{ maxWidth: '180px', marginBottom: '35px' }}>
+                        <div className="grid-item">
+                            <label style={{fontSize: '15px', fontFamily: 'cursive'}}>digite aqui palavrs chave:</label>
+                            <div className="searchBox" style={{fontSize: '15px', marginBottom: '35px'}}>
+                                <SearchBox callback={this.handleSearch} />
+                            </div>
+                        </div>
+                        {videos.map(video => {
+                            const color = this.getRandomColor(previousColor);
+                            previousColor = color;
+                            return (
+                            <div className="grid-item" key={video.id} style={{ maxWidth: '180px', marginBottom: '35px', boxShadow: '4px 3px 5px rgba(0, 0, 0, 0.6)' }}>
                                 <Link to={`/player/${video.id}`}>
-                                    <div className="card border-0">
+                                    <div className="card border-0" style={{ backgroundColor: color }}>
                                         <div className="card-body">
-                                            <p style={{fontSize: '12px'}}>{video.title}</p>
+                                            <p style={{fontSize: '12px', fontFamily: 'cursive', color: 'black'}}>{video.title}</p>
                                         </div>
                                     </div>
                                 </Link>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
-                    <div className="searchBox" style={{position: 'absolute', right: '50px', top: '50px', fontSize: '15px'}}>
-                        <SearchBox callback={this.handleSearch} />
-                    </div>
+                    
                 </div>
             </div>
         )

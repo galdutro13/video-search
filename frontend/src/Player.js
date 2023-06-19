@@ -35,7 +35,7 @@ class Player extends Component {
     console.log('Valor de videoId:', this.state.videoId);
     return (
       <div className="App">
-        <header className="App-header">
+        <header className="App-header" style={{backgroundColor: '#6699cc'}}>
         <button onClick={this.handleBackClick}>Voltar</button>
 
         {this.state.videoId && (
