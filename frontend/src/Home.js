@@ -28,7 +28,8 @@ export default class Home extends Component {
         this.msnry = new Masonry(grid, {
             itemSelector: '.grid-item',
             columnWidth: columnWidth,
-            percentPosition: true,
+            percentPosition: false,
+            isFitWidth: true
         });
         imagesLoaded(grid, this.msnry);
     }
@@ -83,7 +84,7 @@ export default class Home extends Component {
                         <div className="grid-sizer"></div>
                         <div className="grid-item">
                             <label style={{fontSize: '15px', fontFamily: 'cursive'}}>digite aqui palavrs chave:</label>
-                            <div className="searchBox" style={{fontSize: '15px', marginBottom: '35px'}}>
+                            <div className="searchBox" style={{fontSize: '15px', marginBottom: '35px', position: 'sticky'}}>
                                 <SearchBox callback={this.handleSearch} />
                             </div>
                         </div>

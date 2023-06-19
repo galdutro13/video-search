@@ -11,12 +11,19 @@ const SearchBox = (props) => {
         props.callback(inputText);
     }, [inputText, props]);
 
+    let handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            searchHandler();
+        }
+    };
+
     return (
         <div className="searchBox">
             <input
                 type="text"
                 placeholder="Search"
                 onChange={inputHandler}
+                onKeyDown={handleKeyDown}
                 value={inputText}
                 style={{ boxShadow: '3px 2px 3px rgba(0, 0, 0, 0.4)' }}
             />
