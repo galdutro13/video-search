@@ -91,6 +91,11 @@ export default class Home extends Component {
                         {videos.map(video => {
                             const color = this.getRandomColor(previousColor);
                             previousColor = color;
+                            
+                            const baseFontSize = 16; // O tamanho de fonte base em pixels
+                            const maxLength = 50; // O comprimento máximo de texto que você espera
+                            const fontSize = Math.max(baseFontSize * (1 - (video.title.length - 20) / maxLength), 12) + "px";
+                            
                             return (
                             <div className="grid-item" key={video.id} style={{ maxWidth: '180px', marginBottom: '35px', boxShadow: '4px 3px 5px rgba(0, 0, 0, 0.6)' }}>
                                 <Link to={`/player/${video.id}`}>
