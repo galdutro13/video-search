@@ -4,8 +4,42 @@ import Masonry from 'masonry-layout';
 import imagesLoaded from 'imagesloaded';
 import SearchBox from './components/searchBox';
 import axios from "axios";
+import './Home.css'
 
+const postitImages = [
+    "assets/postits/1.png",
+    'assets/postits/2.png',
+    'assets/postits/3.png',
+    'assets/postits/4.png',
+    'assets/postits/5.png',
+    'assets/postits/6.png',
+    'assets/postits/7.png',
+    'assets/postits/8.png',
+    'assets/postits/9.png',
+    'assets/postits/10.png',
+    'assets/postits/11.png',
+    'assets/postits/12.png',
+    'assets/postits/13.png',
+    'assets/postits/14.png',
+    'assets/postits/15.png',
+    'assets/postits/16.png',
+    'assets/postits/17.png',
+    'assets/postits/18.png',
+    'assets/postits/19.png',
+    'assets/postits/20.png',
+    'assets/postits/21.png',
+    'assets/postits/22.png',
+    'assets/postits/23.png',
+    'assets/postits/24.png',
+    'assets/postits/25.png',
+    'assets/postits/26.png',
+    'assets/postits/27.png',
+    'assets/postits/28.png',
+    'assets/postits/29.png',
+    'assets/postits/30.png',
+]
 export default class Home extends Component {
+    
     constructor() {
         super();
         this.state = {
@@ -22,8 +56,8 @@ export default class Home extends Component {
     componentDidUpdate() {
         // Inicializa o Masonry
         const grid = this.gridRef.current;
-        const gridWidth = 1350;
-        const numberOfColumns = 6;
+        const gridWidth = 1440;
+        const numberOfColumns = 8;
         const columnWidth = gridWidth / numberOfColumns;
         this.msnry = new Masonry(grid, {
             itemSelector: '.grid-item',
@@ -79,7 +113,7 @@ export default class Home extends Component {
         return (
             <div className="App App-header" style={{backgroundColor: '#6699cc'}}>
                 <h1 style={{fontSize: '30px', marginTop: '25px', marginBottom: '25px'}}>30 TECNOLOGIAS DA USP QUE VOCÊ PRECISA CONHECER!</h1>
-                <div className="container" style={{ maxWidth: '1536px', minHeight: '1000px' }}>
+                <div className="container" style={{ maxWidth: '1620px', minHeight: '768px' }}>
                     <div className="grid" ref={this.gridRef} style={{position:'absolute', display: 'block', marginLeft: 'auto', marginRight: 'auto'}}>
                         <div className="grid-sizer"></div>
                         <div className="grid-item">
@@ -90,18 +124,47 @@ export default class Home extends Component {
                         </div>
                         {videos.map(video => {
                             const color = this.getRandomColor(previousColor);
+                            const imageIndex = video.id % 30;
                             previousColor = color;
                             
                             const baseFontSize = 16; // O tamanho de fonte base em pixels
                             const maxLength = 50; // O comprimento máximo de texto que você espera
-                            const fontSize = Math.max(baseFontSize * (1 - (video.title.length - 20) / maxLength), 12) + "px";
+                            const fontSize = Math.max(baseFontSize * (1 - (video.title.length - 20) / maxLength), 9) + "px";
+
+                            const backgroundStyle = {
+                                maxWidth: '160px',
+                                height: 'auto', 
+                                marginBottom: '30px',
+                                marginTop: '30px',
+                                //boxShadow: '4px 3px 5px rgba(0, 0, 0, 0.6)',
+                                overflow: 'visible'
+                                // outros estilos aqui
+                            };
+
+                            const cardBackGround = {
+                                //backgroundImage: `url(${postitImages[imageIndex]})`,
+                                backgroundSize: 'cover',  // ou 'contain'
+                                backgroundRepeat: 'no-repeat',
+                                backgroundClip: 'border-box',
+                                position: 'center', // novo
+                                overflow: 'visible',
+                                zIndex: 1 // novo
+                            }
+
+                            const cardBodyStyle = {
+                                position: 'relative', 
+                                zIndex: 2
+                            }
                             
                             return (
-                            <div className="grid-item" key={video.id} style={{ maxWidth: '180px', marginBottom: '35px', boxShadow: '4px 3px 5px rgba(0, 0, 0, 0.6)' }}>
+                            <div className="grid-item" key={video.id} style={backgroundStyle}>
                                 <Link to={`/player/${video.id}`}>
-                                    <div className="card border-0" style={{ backgroundColor: color }}>
-                                        <div className="card-body">
-                                            <p style={{fontSize: '12px', fontFamily: 'cursive', color: 'black'}}>{video.title}</p>
+                                    <div className="card-content">
+                                        <img src={postitImages[imageIndex]} className="postit-overlay"/>
+                                        <div className="card transparent-card" style={cardBackGround}>
+                                            <div className="card-body" style={cardBodyStyle}>
+                                                <p style={{fontSize: fontSize, fontFamily: 'cursive', color: 'black'}}>{video.title}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </Link>
