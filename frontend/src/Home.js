@@ -4,6 +4,7 @@ import Masonry from 'masonry-layout';
 import imagesLoaded from 'imagesloaded';
 import SearchBox from './components/searchBox';
 import axios from "axios";
+import VideoHoverCard from './components/videoPreview';
 import './Home.css'
 
 const postitImages = [
@@ -163,7 +164,7 @@ export default class Home extends Component {
                                         <img src={postitImages[imageIndex]} className="postit-overlay"/>
                                         <div className="card transparent-card" style={cardBackGround}>
                                             <div className="card-body" style={cardBodyStyle}>
-                                                <p style={{fontSize: fontSize, fontFamily: 'cursive', color: 'black'}}>{video.title}</p>
+                                                <VideoHoverCard videoId={video.id} videoTitle={video.title} />
                                             </div>
                                         </div>
                                     </div>
