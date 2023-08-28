@@ -10,7 +10,7 @@ const VideoHoverCard = ({ videoId, videoTitle }) => {
         </HoverCard.Trigger>
         <HoverCard.Portal>
             <HoverCard.Content className="HoverCardContent" sideOffset={5}>
-                <video controls>
+                <video controls className="HoverCardVideo">
                     <source src={`http://localhost:4000/videos/${videoId}`} type="video/mp4" />
                 </video>
                 <HoverCard.Arrow className="HoverCardArrow" />
