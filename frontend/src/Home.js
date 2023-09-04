@@ -113,16 +113,11 @@ export default class Home extends Component {
         let previousColor = null;
         return (
             <div className="App App-header" style={{backgroundColor: '#6699cc'}}>
-                <h1 style={{fontSize: '30px', marginTop: '25px', marginBottom: '25px'}}>30 TECNOLOGIAS DA USP QUE VOCÊ PRECISA CONHECER!</h1>
+                <h1 style={{fontSize: '30px', marginTop: '25px', marginBottom: '25px', textShadow: '1px 1px 2px rgba(0, 0, 0, 0.65)', }}>30 TECNOLOGIAS DA USP QUE VOCÊ PRECISA CONHECER!</h1>
                 <div className="container" style={{ maxWidth: '1620px', minHeight: '768px' }}>
                     <div className="grid" ref={this.gridRef} style={{position:'absolute', display: 'block', marginLeft: 'auto', marginRight: 'auto'}}>
                         <div className="grid-sizer"></div>
-                        <div className="grid-item">
-                            <label style={{fontSize: '15px', fontFamily: 'cursive'}}>digite aqui palavrs chave:</label>
-                            <div className="searchBox" style={{fontSize: '15px', marginBottom: '35px', position: 'sticky'}}>
-                                <SearchBox callback={this.handleSearch} />
-                            </div>
-                        </div>
+                        
                         {videos.map(video => {
                             const color = this.getRandomColor(previousColor);
                             const imageIndex = video.id % 30;
@@ -172,6 +167,12 @@ export default class Home extends Component {
                             </div>
                             );
                         })}
+                        <div className="grid-item">
+                            <label style={{fontSize: '15px', fontFamily: 'cursive'}}>Digite aqui palavras chave:</label>
+                            <div className="searchBox" style={{fontSize: '15px', marginBottom: '35px', position: 'sticky'}}>
+                                <SearchBox callback={this.handleSearch} />
+                            </div>
+                        </div>
                     </div>
                     
                 </div>

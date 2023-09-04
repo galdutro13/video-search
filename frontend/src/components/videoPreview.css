@@ -34,6 +34,8 @@ a {
 }
 
 .HoverCardVideo {
+  width: 310px;
+  border-radius: 5px;
   position: relative;
   transform: translate(0%, 0%);
 }
